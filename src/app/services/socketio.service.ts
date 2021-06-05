@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { io, Socket } from 'socket.io-client';
-import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { ObserversModule } from '@angular/cdk/observers';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SocketioService {
+  socket: Socket;
 
-  socket: Socket
-
-  constructor() { }
+  constructor() {}
 
   connect(gameId) {
     this.socket = io(environment.SOCKET_ENDPOINT);
@@ -21,13 +21,12 @@ export class SocketioService {
     this.socket.emit('startGame', { gameId: gameId });
   }
 
-  // sendGameUpdate(gameId, words) {
-  //   this.socket.emit('gameUpdate', { gameId: gameId, words: words });
-  // }
+  sendGameUpdate(gameId, words) {
+    this.socket.emit('gameUpdate', { gameId: gameId, words: words });
+  }
 
   recieveJoinedPlayers() {
     return new Observable((observer) => {
-      debugger
       this.socket.on('joinGame', (message) => {
         observer.next(message);
       });
@@ -42,11 +41,11 @@ export class SocketioService {
     });
   }
 
-  // recieveGameUpdate(gameId) {
-  //   return new Observable((observer) => {
-  //     this.socket.on(gameId, (words) => {
-  //       observer.next(words);
-  //     });
-  //   });
-  // }
+  recieveGameUpdate(gameId) {
+    return new Observable((observer) => {
+      this.socket.on(gameId, (words) => {
+        observer.next(words);
+      });
+    });
+  }
 }

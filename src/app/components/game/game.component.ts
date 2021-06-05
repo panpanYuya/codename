@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { SocketioService } from '../../services/socketio.service';
+import { SocketioService } from 'src/app/services/socketio.service';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+  styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
   gameId: string;
-  role = "operative";
+  role = 'operative';
   words;
 
   constructor(
     private socketIoService: SocketioService,
     private route: ActivatedRoute,
     private snackbar: MatSnackBar
-    ) { }
+  ) {}
 
   ngOnInit(): void {
     this.gameId = this.route.snapshot.paramMap.get('id');
     this.socketIoService.connect(this.gameId);
     this.recieveJoinedPlayers();
     this.recieveStartGame();
-    // this.recieveGameUpdate();
+    this.recieveGameUpdate();
   }
 
   nextGame() {
@@ -37,16 +37,15 @@ export class GameComponent implements OnInit {
 
   clickWord(word) {
     word.selected = true;
-    // this.socketIoService.sendGameUpdate(this.gameId, this.words);
+    this.socketIoService.sendGameUpdate(this.gameId, this.words);
   }
 
   recieveJoinedPlayers() {
-    debugger
     this.socketIoService.recieveJoinedPlayers().subscribe((message: string) => {
       this.snackbar.open(message, '', {
         duration: 3000,
       });
-    })
+    });
   }
 
   recieveStartGame() {
@@ -56,10 +55,9 @@ export class GameComponent implements OnInit {
     });
   }
 
-  // recieveGameUpdate() {
-  //   this.socketIoService.recieveGameUpdate(this.gameId).subscribe((words) => {
-  //     this.words = words;
-  //   });
-  // }
-
+  recieveGameUpdate() {
+    this.socketIoService.recieveGameUpdate(this.gameId).subscribe((words) => {
+      this.words = words;
+    });
+  }
 }

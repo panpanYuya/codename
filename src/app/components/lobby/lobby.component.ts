@@ -5,18 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 @Component({
   selector: 'app-lobby',
   templateUrl: './lobby.component.html',
-  styleUrls: ['./lobby.component.scss']
+  styleUrls: ['./lobby.component.css'],
 })
 export class LobbyComponent implements OnInit {
+  constructor(private router: Router) {}
 
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   createGame() {
     const uuid = uuidv4();
-    console.log(uuid);
-    this.router.navigate(['/game',uuid]);
+    this.router.navigate(['/game', uuid]);
   }
 }
