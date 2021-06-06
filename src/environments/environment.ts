@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  SOCKET_ENDPOINT: 'https://codename-battle.herokuapp.com:3000',
+  SOCKET_ENDPOINT: 'http://localhost:3000',
 };
 
 /*

@@ -6,6 +6,7 @@ const io = require('socket.io')(httpServer, {
   //originsはURLを指定して、メソッドを指定している
   //https://socket.io/docs/v3/handling-cors/
    cors: {
+    // origin: ["http://localhost:3000","http://localhost:4200"],
     origin: ["https://codename-battle.herokuapp.com:3000","https://codename-battle.herokuapp.com:4200"],
     // origin: "*",
     // methods: ["GET", "POST"]
