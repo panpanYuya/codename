@@ -14,6 +14,7 @@ const io = require('socket.io')(httpServer, {
   origins: ["*"]
 });
 
+
 const { createGame } = require('./util/words');
 
 io.on('connection', (socket) => {
@@ -25,10 +26,6 @@ io.on('connection', (socket) => {
       console.log("Someone is starting a game");
     })
   })
-
-  // socket.on('gameUpdate', ({ gameId, words }) => {
-  //   io.to(gameId).emit(gameId, words);
-  // })
 
   socket.on('joinGame', ({gameId}) => {
     socket.join(gameId);
@@ -49,6 +46,7 @@ io.on('connection', (socket) => {
   // io.to('UNIQUE ID').emit('message', 'THIS MESSAGE WILL BE SIND TO EVERYONE IN THE ROOM EXCEPT THE SENDER!');
 })
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
+const PORT = httpServer.listen(0);
 
 httpServer.listen(PORT, () => console.log('Server is running on port ' + PORT));
