@@ -46,7 +46,6 @@ io.on('connection', (socket) => {
   // io.to('UNIQUE ID').emit('message', 'THIS MESSAGE WILL BE SIND TO EVERYONE IN THE ROOM EXCEPT THE SENDER!');
 })
 
-// const PORT = process.env.PORT || 3000;
-const PORT = httpServer.listen(0);
+const PORT = process.env.PORT || 3000;
 
 httpServer.listen(PORT, () => console.log('Server is running on port ' + PORT));
